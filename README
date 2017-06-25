@@ -1,3 +1,9 @@
+clone notes
+============================
+`sudo apt-get install libxft-dev libx11-dev libxinerama-dev`
+`make`
+`sudo make install`
+
 dwm - dynamic window manager
 ============================
 dwm is an extremely fast, small, and dynamic window manager for X.
