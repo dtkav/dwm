@@ -6,6 +6,6 @@ Name=dwm
 
 Comment=This session starts dwm
 
-Exec=/usr/local/bin/dwm
+Exec=/usr/local/bin/dwmforever
 
 Type=Application
