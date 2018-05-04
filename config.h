@@ -1,5 +1,21 @@
 /* See LICENSE file for copyright and license details. */
 
+
+#define XF86MonBrightnessDown   0x1008ff03
+#define XF86MonBrightnessUp	    0x1008ff02
+#define XF86LaunchA             0x1008ff4a
+#define XF86LaunchB             0x1008ff4b
+#define XF86KbdBrightnessDown   0x1008ff06
+#define XF86KbdBrightnessUp     0x1008ff05
+#define XF86AudioPrev           0x1008ff16
+#define XF86AudioPlay           0x1008ff14
+#define XF86AudioNext           0x1008ff17
+#define XF86AudioMute           0x1008ff12
+#define XF86AudioLowerVolume    0x1008ff11
+#define XF86AudioRaiseVolume    0x1008ff13
+#define XF86Eject               0x1008ff2c
+
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -36,11 +52,13 @@ static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
+#include "tcl.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+    { "|||",      tcl },
 };
 
 /* key definitions */
@@ -61,6 +79,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "gnome-terminal", NULL };
 static const char *slock[] = { "slock", NULL };
 static const char *chrome[] = { "google-chrome", NULL };
+static const char *cmdbrightnessup[]  = { "sudo", "brightness", "up", NULL };
+static const char *cmdbrightnessdown[]  = { "sudo", "brightness", "down", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -80,6 +100,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+	{ MODKEY,                       XK_n,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
@@ -89,6 +110,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ WINKEY,                       XK_l,      spawn,          {.v = slock } },
+	{ 0,                            XF86MonBrightnessDown,     spawn,         {.v = cmdbrightnessdown } },
+	{ 0,                            XF86MonBrightnessUp,       spawn,         {.v = cmdbrightnessup } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
